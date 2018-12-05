@@ -8,6 +8,8 @@ import java.util.*;
 public class InformationService {
 
 
+    private InformationRepository informationRepository;
+
     List<Information> info = new ArrayList<>(Arrays.asList(
                 new Information("a0021", "Mark", "Sloan"),
                 new Information("a0022", "Addison", "Montgomry"),
@@ -16,7 +18,11 @@ public class InformationService {
                 ));
 
     public List<Information> getAllInformation(){
+
+        List<Information> info = new ArrayList<>();
+        informationRepository.findAll().forEach(info::add);
         return info;
+        //return info;
     }
     public Information getInformation(String id){
         for (Information information : info) {
@@ -29,7 +35,8 @@ public class InformationService {
     }
 
     public void addInformation(Information information) {
-        info.add(information);
+        informationRepository.save(information);
+        //info.add(information);
     }
 
     public void addInformation(String id, Information information) {

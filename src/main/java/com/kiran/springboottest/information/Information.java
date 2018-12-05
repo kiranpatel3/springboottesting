@@ -1,6 +1,13 @@
 package com.kiran.springboottest.information;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Information {
+
+
+    @Id
     private String id;
     private String firstname;
     private String lastname;
