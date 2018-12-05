@@ -1,5 +1,6 @@
 package com.kiran.springboottest.information;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -7,31 +8,19 @@ import java.util.*;
 @Service
 public class InformationService {
 
-
+    @Autowired
     private InformationRepository informationRepository;
 
-    List<Information> info = new ArrayList<>(Arrays.asList(
-                new Information("a0021", "Mark", "Sloan"),
-                new Information("a0022", "Addison", "Montgomry"),
-                new Information("a0023", "Derek", "Shepherd"),
-                new Information("a0024", "Meredith", "Grey")
-                ));
 
     public List<Information> getAllInformation(){
 
         List<Information> info = new ArrayList<>();
         informationRepository.findAll().forEach(info::add);
         return info;
-        //return info;
     }
     public Information getInformation(String id){
-        for (Information information : info) {
-            if(information.getId().equals(id)){
-                return information;
-            }
-        }
-        return null;
-//        return info.stream().filter(t -> t.getId().equals(id)).findFirst().get();
+        Optional<Information> informationOptional =  informationRepository.findById(id);
+        return informationOptional.orElse(new Information());
     }
 
     public void addInformation(Information information) {
@@ -40,16 +29,10 @@ public class InformationService {
     }
 
     public void addInformation(String id, Information information) {
-        for(int i = 0; i< info.size(); i++){
-            Information in = info.get(i);
-            if(in.getId().equals(id)){
-                info.set(i, information);
-                return;
-            }
-        }
+        informationRepository.save(information);
     }
 
     public void deleteInformation(String id) {
-        info.removeIf(t -> t.getId().equals(id));
+        informationRepository.deleteById(id);
     }
 }

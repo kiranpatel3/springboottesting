@@ -34,4 +34,9 @@ public class InformationController {
     public void deleteInformation(@PathVariable String id){
         informationService.deleteInformation(id);
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/param")
+    public String testParam(@RequestParam("firstname") String firstname, @RequestParam("lastname") String lastname){
+        return "Firstname = " + firstname + ", lastname = " + lastname;
+    }
 }
